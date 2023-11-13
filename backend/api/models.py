@@ -12,3 +12,6 @@ class Product(models.Model):
     @property
     def sale_price(self):
         return round(float(self.price) * 0.75, 2)
+
+    def get_discount(self):
+        return "122"

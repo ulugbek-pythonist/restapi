@@ -8,9 +8,9 @@ from .serializers import ProductSerializer
 
 
 def api_home(request, *args, **kwargs):
-    print(request.GET)
-    print(request.headers)
-    print(request.POST)
+    print("GET: ", request.GET)
+    print("HEADERS: ", request.headers)
+    print("POST: ", request.POST)
     return JsonResponse({"xabar": "Tavba qil, birodar!"})
 
 

@@ -4,7 +4,7 @@ from .models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    my_discount = serializers.SerializerMethodField(read_only=True)
+    your_discount = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -13,8 +13,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "price",
             "sale_price",
             "content",
-            "my_discount",
+            "your_discount",
         ]
 
-    def get_my_discount(self, obj):
+    def get_your_discount(self, obj):
         return obj.get_discount()

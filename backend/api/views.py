@@ -2,16 +2,40 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import generics
 
 from .models import Product
 from .serializers import ProductSerializer
 
 
+class ProductDestroyAPIView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductUpdateAPIView(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "title"
+
+
+class ProductListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductCreateAPIView(generics.CreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductDetailView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
 def api_home(request, *args, **kwargs):
-    print("GET: ", request.GET)
-    print("HEADERS: ", request.headers)
-    print("POST: ", request.POST)
-    return JsonResponse({"xabar": "Tavba qil, birodar!"})
+    return JsonResponse({"xabar": "DRF is interesting."})
 
 
 # def product_list(request, *args, **kwargs):
@@ -33,3 +57,17 @@ def product_list(request, *args, **kwargs):
         data = ProductSerializer(instance).data
         return Response(data)
     return Response("Not found")
+
+
+@api_view(["POST"])
+def add_product(request, *args, **kwargs):
+    print(request.data)
+    data = request.data
+
+    title = data["title"]
+    content = data["content"]
+    price = data["price"]
+
+    Product.objects.create(title=title, content=content, price=price)
+
+    return Response({"xabar": "Mahsulot qo'shildi"})

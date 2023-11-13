@@ -14,4 +14,4 @@ class Product(models.Model):
         return round(float(self.price) * 0.75, 2)
 
     def get_discount(self):
-        return "122"
+        return float(self.price) * 0.25

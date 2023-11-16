@@ -2,7 +2,7 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics, permissions
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -11,6 +11,7 @@ from .serializers import ProductSerializer
 class ProductDestroyAPIView(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ProductUpdateAPIView(generics.UpdateAPIView):
@@ -32,6 +33,9 @@ class ProductCreateAPIView(generics.CreateAPIView):
 class ProductDetailView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
 
 
 def api_home(request, *args, **kwargs):
